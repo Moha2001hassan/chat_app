@@ -10,43 +10,45 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ChatAppbar(title: 'Home Screen'),
-      body: Container(
-        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-        // child: ListView.separated(
-        //   separatorBuilder: (_, _) => const SizedBox(height: 8),
-        //   itemCount: 2,
-        //   itemBuilder: (context, i) {
-        //     return ChatItem();
-        //   },
-        // )
-        child: Column(
-          children: [
-            ChatItem(
-              chatName: 'Chat 1',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const Chat1Screen(chatName: 'Chat 1'),
-                  ),
-                );
-              },
-            ),
-            const Divider(),
-            ChatItem(
-              chatName: 'Chat 2',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const Chat2Screen(chatName: 'Chat 2'),
-                  ),
-                );
-              },
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: ChatAppbar(title: 'Home Screen'),
+        body: Container(
+          padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+          // child: ListView.separated(
+          //   separatorBuilder: (_, _) => const SizedBox(height: 8),
+          //   itemCount: 2,
+          //   itemBuilder: (context, i) {
+          //     return ChatItem();
+          //   },
+          // )
+          child: Column(
+            children: [
+              ChatItem(
+                chatName: 'Chat 1',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const Chat1Screen(chatName: 'Chat 1'),
+                    ),
+                  );
+                },
+              ),
+              const Divider(),
+              ChatItem(
+                chatName: 'Chat 2',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const Chat2Screen(chatName: 'Chat 2'),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
