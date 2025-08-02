@@ -4,15 +4,17 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 
 import '../core/const.dart';
 import '../logic/chat_controller.dart';
+import '../model/message.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class Chat1Screen extends StatefulWidget {
+  final String chatName;
+  const Chat1Screen({super.key, required this.chatName});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<Chat1Screen> createState() => _Chat1ScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _Chat1ScreenState extends State<Chat1Screen> {
   late final ChatController controller;
   late final TextEditingController messageController;
   late final ScrollController scrollController;
@@ -27,14 +29,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ChatAppbar(),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset('assets/images/spiderman.jpg', fit: BoxFit.cover),
-          ),
-          SizedBox(
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset('assets/images/spiderman.jpg', fit: BoxFit.cover),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: ChatAppbar(title: 'Chat 1'),
+          body: SizedBox(
             child: Column(
               children: [
                 Expanded(
@@ -43,19 +46,26 @@ class _ChatScreenState extends State<ChatScreen> {
                     itemCount: chatMessages.length,
                     itemBuilder: (context, i) {
                       return BubbleSpecialThree(
-                        text: chatMessages[i],
-                        color: Color(0xFF1B97F3),
+                        text: chatMessages[i].message,
+                        color: chatMessages[i].sender == widget.chatName
+                            ? Color(0xFF1B97F3)
+                            : Color(0xFF7B7B7B),
                         tail: true,
-                        isSender: true,
-                        textStyle: TextStyle(color: Colors.white, fontSize: 16),
+                        isSender: chatMessages[i].sender == widget.chatName,
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       );
                     },
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 8,
+                  padding: const EdgeInsets.only(
+                    top: 4,
+                    bottom: 10,
+                    left: 12,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -79,7 +89,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       IconButton(
                         icon: Icon(Icons.send, color: Colors.blue),
                         onPressed: () async {
-                          await controller.sendMessage(messageController.text);
+                          Message message = Message(
+                            message: messageController.text,
+                            sender: widget.chatName,
+                          );
+                          await controller.sendMessage(message);
                           messageController.clear();
                           setState(() {});
                           controller.scrollToBottom(scrollController);
@@ -91,8 +105,8 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const ChatAppbar({super.key});
+  final String title;
+  const ChatAppbar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
+      foregroundColor: Colors.white,
       centerTitle: true,
       elevation: 0,
-      title: const Text(
-        'Chat 1',
+      title: Text(
+        title,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
     );

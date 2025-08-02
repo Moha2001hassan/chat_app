@@ -1,5 +1,3 @@
-List chatMessages = [
-  'Hello',
-  'Hi',
-  "Good Morning",
-];
+import '../model/message.dart';
+
+List<Message> chatMessages = [];
