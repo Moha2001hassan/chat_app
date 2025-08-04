@@ -1,8 +1,5 @@
-import 'package:chat_app/screens/home_screen.dart';
-import 'package:chat_app/screens/signup_screen.dart';
+import 'package:chat_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../logic/auth_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,10 +11,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final AuthController _authController = AuthController();
-
-  bool _isLoading = false;
-  String? _error;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 40),
-                  if (_error != null)
-                    Text(_error!, style: const TextStyle(color: Colors.red)),
-                  const SizedBox(height: 10),
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -62,17 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 30),
 
                   ElevatedButton(
-                    onPressed: _isLoading
-                        ? null
-                        : () async {
-                            if (_emailController.text.isEmpty ||
-                                _passwordController.text.isEmpty) {
-                              setState(() {
-                                _error = 'الرجاء تعبئة كل الحقول';
-                              });
-                            }
-                            await _login();
-                          },
+                    onPressed: () async {},
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
                       shape: RoundedRectangleBorder(
@@ -80,16 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       backgroundColor: Colors.blue,
                     ),
-                    child: _isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text(
-                            'تسجيل الدخول',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
+                    child: const Text(
+                      'تسجيل الدخول',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   TextButton(
@@ -109,33 +87,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _login() async {
-    setState(() {
-      _isLoading = true;
-      _error = null;
-    });
-
-    final error = await _authController.loginWithEmail(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-    );
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (error != null) {
-      setState(() => _error = error);
-    } else {
-      if (!mounted) return;
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-        (route) => false,
-      );
-    }
   }
 
   @override

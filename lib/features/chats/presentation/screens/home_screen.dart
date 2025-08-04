@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/chat_appbar.dart';
+import '../../../../shared/widgets/chat_appbar.dart';
 import '../widgets/chat_item.dart';
 import 'chat1_screen.dart';
 import 'chat2_screen.dart';

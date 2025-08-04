@@ -1,10 +1,10 @@
-import 'package:chat_app/widgets/chat_appbar.dart';
+import 'package:chat_app/shared/widgets/chat_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 
-import '../core/const.dart';
-import '../logic/chat_controller.dart';
-import '../model/message.dart';
+import '../../../../core/const.dart';
+import '../controllers/chat_controller.dart';
+import '../../data/models/message.dart';
 
 class Chat2Screen extends StatefulWidget {
   final String chatName;

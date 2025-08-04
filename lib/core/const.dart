@@ -1,3 +1,3 @@
-import '../model/message.dart';
+import '../features/chats/data/models/message.dart';
 
 List<Message> chatMessages = [];
